@@ -1,0 +1,151 @@
+*{
+    margin: 0;
+    padding:0;
+    
+}
+body{
+    background-color:whitesmoke;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+    overflow:hidden;
+}
+.clock{
+    width:400px;
+    height: 400px;
+    background-color: aliceblue;
+    border-radius: 100%;
+    border: 10px solid black;
+    border-style:ridge;
+    position: relative; 
+    z-index: 8;
+}
+.glass{
+    width:400px;
+    height: 400px;
+    background-color: rgb(227, 233, 236);
+    border-radius: 100%;
+    backdrop-filter:blur(100%);
+}
+.number{
+    --rotate : 0;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    text-align: center;
+    font-size: 25px;
+    color: black;
+    transform: rotate(var(--rotate));
+    transform-origin: center center;
+}
+.number-1{
+    --rotate:30deg;
+}
+.number-2{
+    --rotate:60deg;
+}
+.number-3{
+    --rotate:90deg;
+}
+.number-4{
+    --rotate:120deg;
+}
+.number-5{
+    --rotate:150deg;
+}
+.number-6{
+    --rotate:180deg;
+    transform: rotate3d(40deg);
+}
+.number-7{
+    --rotate:210deg;
+    
+}
+.number-8{
+    --rotate:240deg;
+}
+.number-9{
+    --rotate:270deg;
+}
+.number-10{
+    --rotate:300deg;
+}
+.number-11{
+    --rotate:330deg;
+}
+/*.clock ::after{
+    content: "";
+    width: 10px;
+    height: 10px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    background-color: black;
+    border: none;
+    border-radius: 100%;
+}*/
+.needle{    
+    position:absolute;
+    --rotation : 0;
+    bottom: 50%;
+    left: 49%;
+    transform-origin: bottom;
+    transform: rotate(calc(var(--rotation)*1deg));
+    border-top-left-radius: 100%;
+    border-top-right-radius: 100%;
+    z-index: 10;
+}
+.hr{
+    background-color: rgb(110, 175, 156);
+    width: 8px;
+    height: 25%;
+}
+.min{
+    background-color: rgb(110, 175, 156) ;
+    height: 35%;
+    width: 8px;
+}
+.sec{
+    height: 38%;
+    width: 3px;
+    background-color: black;
+}
+
+
+
+.clock::after{
+    content: '';
+    width: 20px;
+    height: 20px;
+    background-color: cadetblue;
+    border-radius: 100%;
+    position:absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    z-index: 11;
+}
+/*.line-left{
+    content: "";
+    width: 5px;
+    height: 100px;
+    border-radius: 30%;
+    background-color: black;
+    position:absolute;
+    top: 50%;
+    left: 51%;
+}
+/*.line-right{
+    content: "";
+    width: 5px;
+    height: 100px;
+    border-radius: 30%;
+    background-color: black;
+    position:absolute;
+    top: 50%;
+    left: 51%;
+    transform: translate(-10%,-95%);
+}*/
+

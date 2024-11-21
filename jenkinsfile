@@ -1,0 +1,39 @@
+pipeline {
+    agent any
+    stages {
+        stage('Checkout') {
+            steps {
+                echo 'Checking out the code...'
+                checkout scm
+            }
+        }
+        stage('Build') {
+            steps {
+                echo 'Building the Docker image...'
+                sh 'docker build -t analog-project .'
+            }
+        }
+        stage('Run') {
+            steps {
+                echo 'Running the Docker container...'
+                sh '''
+                docker stop analog-project-container || true
+                docker rm analog-project-container || true
+                docker run -d -p 8081:8081 --name analog-project-container analog-project
+                '''
+            }
+        }
+    }
+    post {
+        always {
+            echo 'Pipeline execution completed.'
+        }
+        cleanup {
+            echo 'Cleaning up Docker containers...'
+            sh '''
+            docker stop analog-project-container || true
+            docker rm analog-project-container || true
+            '''
+        }
+    }
+}
