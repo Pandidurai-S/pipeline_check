@@ -1,13 +1,66 @@
 pipeline {
     agent any
-    
+
+    environment {
+        DOCKER_IMAGE = 'analog-project-image'
+        DOCKER_TAG = 'latest'
+        DOCKER_PORT = '8081'
+    }
+
     stages {
         stage('Checkout') {
             steps {
                 git 'https://github.com/Pandidurai-S/pipeline_check.git'
             }
         }
+
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    // Build the Docker image using the Dockerfile in your repo
+                    sh 'docker build -t $DOCKER_IMAGE:$DOCKER_TAG .'
+                }
+            }
+        }
+
+        stage('Test Deployment') {
+            steps {
+                script {
+                    // Run the container in the background
+                    sh "docker run -d -p $DOCKER_PORT:80 --name analog-project-container $DOCKER_IMAGE:$DOCKER_TAG"
+                    // Wait a few seconds for the container to start up
+                    sleep 5
+                    // Test if the app is accessible on the specified port
+                    sh 'curl -f http://localhost:$DOCKER_PORT || exit 1'
+                }
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                script {
+                    // Deploy: This could involve any additional steps like pushing to Docker Hub or AWS
+                    // For this example, we'll just ensure the container is running
+                    sh "docker ps -a"
+                }
+            }
+        }
+
+        stage('Clean Up') {
+            steps {
+                script {
+                    // Clean up: Remove the container and the image
+                    sh 'docker rm -f analog-project-container'
+                    sh 'docker rmi $DOCKER_IMAGE:$DOCKER_TAG'
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            // Clean up: Stop and remove any running container if there was an error
+            sh 'docker ps -q --filter name=analog-project-container | xargs --no-run-if-empty docker stop'
+        }
     }
 }
-        
-       
