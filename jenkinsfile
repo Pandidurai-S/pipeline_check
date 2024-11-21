@@ -1,0 +1,33 @@
+pipeline {
+    agent any
+    
+    stages {
+        stage('Checkout') {
+            steps {
+                // Checkout code from GitHub
+                git 'https://github.com/Pandidurai-S/pipeline_check.git'
+            }
+        }
+        
+        stage('Build') {
+            steps {
+                // Build your application here
+                echo 'Building the project...'
+            }
+        }
+        
+        stage('Test') {
+            steps {
+                // Run tests here
+                echo 'Running tests...'
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                // Deploy your application here
+                echo 'Deploying the application...'
+            }
+        }
+    }
+}
